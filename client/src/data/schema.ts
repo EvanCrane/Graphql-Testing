@@ -1,41 +1,64 @@
 import { gql } from 'apollo-boost';
 
-export const GET_USERS = gql`
+export class QuerySchemas {
+  GET_USERS = gql`
   {
     getUsers {
       id,
       name,
       job_title,
-      email
+      email, 
+      state,
+      location
     }
   }
 `;
 
-export const VIEW_USERS = gql`
-  query ($id: Int){
+  VIEW_USER_BY_ID = gql`
+  query($id: Int){
     getUserInfo(id: $id) {
       id,
       name,
       job_title,
-      email
+      email,
+      state,
+      location
     }
   }
 `;
 
-export const ADD_USER = gql`
+  VIEW_USERS_BY_STATE = gql`
+  query($state: Boolean) {
+    getUsersByState(state: $state) {
+      name,
+      email,
+    }
+  }
+`;
+}
+
+export class MutationSchemas {
+  ADD_USER = gql`
   mutation($name: String, $email: String, $job_title: String) {
     createUser (name: $name, email: $email, job_title: $job_title)
   }
 `;
 
-export const EDIT_USER = gql`
+  EDIT_USER = gql`
   mutation($id: Int, $name: String, $email: String, $job_title: String) {
     updateUserInfo (id: $id, name: $name, email: $email, job_title: $job_title)
   }
 `;
 
-export const DELETE_USER = gql`
+  DELETE_USER = gql`
   mutation($id: Int) {
     deleteUser(id: $id)
   }
 `
+
+  UPDATE_USER_STATE = gql`
+  mutation($state: Boolean, $id: Int) {
+    updateUserState(state: $state, id: $id)
+  }
+`;
+}
