@@ -1,7 +1,8 @@
 {
-  "name": "graphql-testing",
+  "name": "graphql-testing-client",
   "version": "0.1.0",
   "private": true,
+  "description": "graphql testing project quick client",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
