@@ -39,8 +39,8 @@ export class QuerySchemas {
 
 export class MutationSchemas {
   ADD_USER = gql`
-  mutation($name: String, $email: String, $job_title: String) {
-    createUser (name: $name, email: $email, job_title: $job_title)
+  mutation($name: String, $email: String, $job_title: String, $state: Boolean, $location: String) {
+    createUser (name: $name, email: $email, job_title: $job_title, state: $state, location: $location)
   }
 `;
 

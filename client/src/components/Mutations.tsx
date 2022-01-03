@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { Row, Col, Card, CardBody, CardHeader, CardSubtitle, Spinner, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Row, Col, Button, Card, CardBody, CardHeader, CardSubtitle, Spinner, Form, FormGroup, Label, Input } from 'reactstrap';
 import { MutationSchemas } from '../data/schema';
-import { queries } from '@testing-library/react';
+import './Mutations.css';
 
 function Mutations() {
     const mutations: MutationSchemas = new MutationSchemas();
@@ -16,9 +16,9 @@ function Mutations() {
                 <CardHeader>Query - Displaying all data</CardHeader>
                 <CardBody>
                     <AddUser mutations={mutations} />
-                    <EditUser mutations={mutations} />
-                    <DeleteUser mutations={mutations} />
-                    <UpdateUserState mutations={mutations} />
+                    
+                  
+                    
                 </CardBody>
             </Card>
 
@@ -28,32 +28,89 @@ function Mutations() {
 
 function AddUser({ mutations }: { mutations: MutationSchemas }) {
 
+    const [active, setActive] = useState(false);
+
+
+
     const [addUser, { data, loading, error }] = useMutation(mutations.ADD_USER);
 
-    if (loading) return <Spinner color="dark" />;
+    if (loading) return <Spinner color='dark' />;
     if (error) return <React.Fragment>Error :(</React.Fragment>;
+
+    function handleActiveCheck() {
+        setActive(!active);
+    }
+
+    function handleSubmit(e: any): any {
+        e.preventDefault();
+        addUser({
+            variables: {
+                name: e.target.name.value,
+                email: e.target.email.value,
+                job_title: e.target.jobTitle.value,
+                state: active,
+                location: e.target.location.value,
+            }
+        });
+    }
 
     return (
         <div>
-            <Form></Form>
+            <Form className='addUserForm' onSubmit={handleSubmit}>
+                <FormGroup>
+                    <Label for='addUserInput1'>
+                        Name
+                    </Label>
+                    <Input id='addUserInput1' name='name' type='text' />
+
+                    <Label for='addUserInput2'>
+                        Email
+                    </Label>
+                    <Input id='addUserInput2' name='email' type='text' />
+
+                    <Label for='addUserInput4'>
+                        Job Title
+                    </Label>
+                    <Input id='addUserInput4' name='jobTitle' type='text' />
+                    <Label for='addUserInput5'>
+                        Location
+                    </Label>
+                    <Input id='addUserInput5' name='location' type='text' />
+                </FormGroup>
+                <FormGroup check>
+                    <Label check for='active'>
+                        Active
+                    </Label>
+                    <Input id='active' name="isActive" type='checkbox' onChange={handleActiveCheck}/>
+                </FormGroup>
+                <Button type='submit'>Submit</Button>
+            </Form>
             <div>
                 <h4> Mutation Results </h4>
-                <pre>{JSON.stringify(data)}</pre>
+                <code>{JSON.stringify(data)}</code>
             </div>
         </div>
     );
 }
 
+
 function EditUser({ mutations }: { mutations: MutationSchemas }) {
 
     const [editUser, { data, loading, error }] = useMutation(mutations.EDIT_USER);
 
-    if (loading) return <Spinner color="dark" />;
+    if (loading) return <Spinner color='dark' />;
     if (error) return <React.Fragment>Error :(</React.Fragment>;
 
     return (
         <div>
-            <Form></Form>
+            <Form className='editUserForm'>
+                <FormGroup>
+                    <Label for='editUserInput'>
+                        Edit User Input
+                    </Label>
+                    <Input id='editUserInput' />
+                </FormGroup>
+            </Form>
             <div>
                 <h4> Mutation Results </h4>
                 <pre>{JSON.stringify(data)}</pre>
@@ -66,12 +123,19 @@ function DeleteUser({ mutations }: { mutations: MutationSchemas }) {
 
     const [deleteUser, { data, loading, error }] = useMutation(mutations.DELETE_USER);
 
-    if (loading) return <Spinner color="dark" />;
+    if (loading) return <Spinner color='dark' />;
     if (error) return <React.Fragment>Error :(</React.Fragment>;
 
     return (
         <div>
-            <Form></Form>
+            <Form className='deleteUserForm'>
+                <FormGroup>
+                    <Label>
+                        Input without validation
+                    </Label>
+                    <Input />
+                </FormGroup>
+            </Form>
             <div>
                 <h4> Mutation Results </h4>
                 <pre>{JSON.stringify(data)}</pre>
@@ -84,12 +148,19 @@ function UpdateUserState({ mutations }: { mutations: MutationSchemas }) {
 
     const [updateUserState, { data, loading, error }] = useMutation(mutations.UPDATE_USER_STATE);
 
-    if (loading) return <Spinner color="dark" />;
+    if (loading) return <Spinner color='dark' />;
     if (error) return <React.Fragment>Error :(</React.Fragment>;
 
     return (
         <div>
-            <Form></Form>
+            <Form className='updateUserStateForm'>
+                <FormGroup>
+                    <Label>
+                        Input without validation
+                    </Label>
+                    <Input />
+                </FormGroup>
+            </Form>
             <div>
                 <h4> Mutation Results </h4>
                 <pre>{JSON.stringify(data)}</pre>
@@ -97,5 +168,6 @@ function UpdateUserState({ mutations }: { mutations: MutationSchemas }) {
         </div>
     );
 }
+
 
 export default Mutations;

@@ -31,7 +31,7 @@ const schema = buildSchema(`
 
   type Mutation {
     updateUserInfo(id: Int, name: String, email: String, job_title: String, email: String, state: Boolean, location: String) : Boolean,
-    createUser(name: String, email: String, job_title: String, email: String, state: Boolean, location: String) : Boolean,
+    createUser(name: String, email: String, job_title: String, state: Boolean, location: String) : Boolean,
     deleteUser(id: Int) : Boolean,
     updateUserState(id: Int, state: Boolean) : Boolean
   }

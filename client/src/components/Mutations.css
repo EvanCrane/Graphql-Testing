@@ -1,0 +1,11 @@
+Form {
+    text-align: left;
+}
+
+Label {
+    padding-top: 2rem;
+}
+
+Button {
+    margin-top: 2rem;
+}
